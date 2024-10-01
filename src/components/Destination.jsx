@@ -3,7 +3,7 @@ import TiltedCover from "./TiltedCover";
 const Destination = () => {
   return (
     <>
-      <p className="text-red-500 text-5xl text-center m-5 font-bold ">
+      <p className="text-red-500 lg:text-5xl text-2xl text-center m-5 font-bold ">
         Popular Destinations we Cover
       </p>
       <div className="flex w-full flex-wrap items-center justify-center">
