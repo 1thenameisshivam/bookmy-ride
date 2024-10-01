@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import TiltedCover from "./TiltedCover";
+import AnimatedGradientText from "./AnimatedGradientText";
 const Destination = () => {
   return (
     <>
-      <p className="text-red-500 lg:text-5xl text-2xl text-center m-5 font-bold ">
-        Popular Destinations we Cover
-      </p>
+      <AnimatedGradientText className="text-5xl font-mono text-center">
+        Popular Destinations we cover
+      </AnimatedGradientText>
       <div className="flex w-full flex-wrap items-center justify-center">
         <TiltedCover
           image={{

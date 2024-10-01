@@ -5,7 +5,7 @@ const WhoWeAre = () => {
   return (
     <div className="flex justify-center text-center w-screen lg:p-10">
       <div className="lg:w-1/2">
-        <ScrollReveal className="md:text-3xl dark:text-gray-200">
+        <ScrollReveal className="md:text-2xl dark:text-white">
           <span className="text-red-600 font-bold">We are</span> a Uttar
           Pradesh-based travel agency with a passion for crafting memorable
           journeys across India. Our expertise shines through in the successful
