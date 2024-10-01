@@ -1,3 +1,4 @@
+import Destination from "../components/Destination";
 import Hero from "../components/Hero";
 import Logo from "../components/Logo";
 const LandingPage = () => {
@@ -9,7 +10,9 @@ const LandingPage = () => {
       <div className="mt-10 lg:scale-150 mb-24">
         <Hero />
       </div>
-      <p className="text-white bg-white">jfghj</p>
+      <div className="mt-32">
+        <Destination />
+      </div>
     </div>
   );
 };
