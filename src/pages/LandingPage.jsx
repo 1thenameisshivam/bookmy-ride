@@ -1,4 +1,5 @@
 import Destination from "../components/Destination";
+import Features from "../components/Features";
 import Hero from "../components/Hero";
 import Logo from "../components/Logo";
 import WhoWeAre from "../components/WhoWeAre";
@@ -16,6 +17,9 @@ const LandingPage = () => {
       </div>
       <div>
         <Destination />
+      </div>
+      <div>
+        <Features/>
       </div>
     </div>
   );
