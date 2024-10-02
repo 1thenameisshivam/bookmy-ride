@@ -23,48 +23,57 @@ const NumberCount = () => {
   return (
     <div className="flex gap-5 mt-11 mb-11">
       <div
-        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded"
+        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded-lg"
         ref={ref}
       >
         <p className="text-white text-2xl text-yellow-400">
           Destination we cover
         </p>
-        <AnimatedNumber
-          className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
-          springOptions={{
-            bounce: 0,
-            duration: 10000,
-          }}
-          value={value.value1}
-        />
+        <div className="flex items-center gap-2">
+          <span className="text-white text-2xl">+</span>{" "}
+          <AnimatedNumber
+            className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
+            springOptions={{
+              bounce: 0,
+              duration: 10000,
+            }}
+            value={value.value1}
+          />
+        </div>
       </div>
       <div
-        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded"
+        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded-lg"
         ref={ref}
       >
         <p className="text-white text-2xl text-yellow-400">happy Costumers</p>
-        <AnimatedNumber
-          className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
-          springOptions={{
-            bounce: 0,
-            duration: 10000,
-          }}
-          value={value.value2}
-        />
+        <div className="flex items-center gap-2">
+          <span className="text-white text-2xl">+</span>
+          <AnimatedNumber
+            className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
+            springOptions={{
+              bounce: 0,
+              duration: 10000,
+            }}
+            value={value.value2}
+          />
+        </div>
       </div>
       <div
-        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded"
+        className="flex flex-col border border-2 border-white flex-wrap items-center justify-center p-11 px-28 rounded-lg"
         ref={ref}
       >
         <p className="text-white text-2xl text-yellow-400">successful Trips</p>
-        <AnimatedNumber
-          className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
-          springOptions={{
-            bounce: 0,
-            duration: 10000,
-          }}
-          value={value.value3}
-        />
+        <div className="flex items-center gap-2">
+          <span className="text-white text-2xl">+</span>
+          <AnimatedNumber
+            className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
+            springOptions={{
+              bounce: 0,
+              duration: 10000,
+            }}
+            value={value.value3}
+          />
+        </div>
       </div>
     </div>
   );
