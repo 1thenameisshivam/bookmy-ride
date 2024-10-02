@@ -2,6 +2,7 @@ import Destination from "../components/Destination";
 import Features from "../components/Features";
 import Hero from "../components/Hero";
 import Logo from "../components/Logo";
+import NumberCount from "../components/NumberCount";
 import WhoWeAre from "../components/WhoWeAre";
 const LandingPage = () => {
   return (
@@ -20,6 +21,9 @@ const LandingPage = () => {
       </div>
       <div className="mt-20">
         <Features />
+      </div>
+      <div className="flex justify-center">
+        <NumberCount />
       </div>
     </div>
   );
