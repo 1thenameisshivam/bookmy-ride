@@ -43,7 +43,10 @@ function OpacityChild({ children, index, progress, total }) {
   }
 
   return (
-    <motion.span style={{ opacity }} className={cn(className, "h-fit")}>
+    <motion.span
+      style={{ opacity }}
+      className={cn(className, "h-fit text-white")}
+    >
       {children}
     </motion.span>
   );

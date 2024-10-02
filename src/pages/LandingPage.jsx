@@ -18,8 +18,8 @@ const LandingPage = () => {
       <div>
         <Destination />
       </div>
-      <div>
-        <Features/>
+      <div className="mt-20">
+        <Features />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import AnimatedGradientText from "./AnimatedGradientText";
 const Destination = () => {
   return (
     <>
-      <AnimatedGradientText className="text-5xl font-mono text-center">
+      <AnimatedGradientText className="text-5xl font-mono text-center mb-10">
         Popular Destinations we cover
       </AnimatedGradientText>
       <div className="flex w-full flex-wrap items-center justify-center">
