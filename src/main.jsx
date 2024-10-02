@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import Login from "./pages/Login.jsx";
 import ProtectedRoute from "./lib/ProtectedRoute.jsx";
 import Trips from "./pages/Trips.jsx";
+import Signup from "./pages/Signup.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path:"/signup",
+        element:<Signup/>
+      }
     ],
   },
 ]);
