@@ -4,9 +4,46 @@ import { useState } from "react";
 import { Eye, EyeOff, Link, Plane } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
+import { VITE_BACKEND_URL } from "../utils/constants";
+import toast from "react-hot-toast";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loding, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      const login = await fetch(VITE_BACKEND_URL + "/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      const response = await login.json();
+      if (response.status) {
+        setLoading(false);
+
+        toast.success("Login Successful");
+        navigate("/");
+      }
+      if (!response.status) {
+        setLoading(false);
+        setError(response.message);
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error("Something went wrong");
+    }
+  };
   const navigationHandler = () => {
     navigate("/signup");
   };
@@ -15,7 +52,6 @@ const Login = () => {
       className="min-h-screen flex items-center justify-center bg-gray-900 bg-cover bg-no-repeat"
       style={{
         backgroundImage:
-          // "url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
           "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHRyaXB8ZW58MHx8MHx8fDA%3D')",
       }}
     >
@@ -42,7 +78,10 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                id="email"
+                name="email"
+                onChange={(e) =>
+                  setData({ ...data, [e.target.name]: e.target.value })
+                }
                 className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:border-red-500"
                 placeholder="you@example.com"
                 required
@@ -58,7 +97,10 @@ const Login = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  id="password"
+                  name="password"
+                  onChange={(e) =>
+                    setData({ ...data, [e.target.name]: e.target.value })
+                  }
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:border-red-500"
                   placeholder="Enter your password"
                   required
@@ -78,35 +120,31 @@ const Login = () => {
             </div>
           </div>
           <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-700 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-300"
-              >
-                Remember me
-              </label>
-            </div>
-            <div className="text-sm">
+            {/* <div className="text-sm">
               <a
                 href="#"
                 className="font-medium text-red-500 hover:text-red-400"
               >
                 Forgot your password?
               </a>
-            </div>
+            </div> */}
           </div>
+          {error && <div className="text-red-600">{error}</div>}
           <div className="mt-8">
             <button
               type="submit"
-              className="w-full px-4 py-3 rounded-lg font-semibold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-300"
+              onClick={handleSubmit}
+              className={`w-full px-4 py-3 rounded-lg font-semibold text-white ${
+                loding ? "bg-red-800" : "bg-red-600"
+              } hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-300`}
             >
-              Sign In
+              {loding ? (
+                <div className="flex justify-center">
+                  <AiOutlineLoading3Quarters className="text-2xl  animate-spin" />
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </div>
         </form>
