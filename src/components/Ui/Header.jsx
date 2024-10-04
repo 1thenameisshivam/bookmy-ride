@@ -30,7 +30,7 @@ export default function Header() {
     }
   };
   return (
-    <header className=" fixed top-0 w-full bg-gradient-to-r z-50 from-red-600 to-yellow-600 text-white">
+    <header className=" fixed overflow-hidden top-0 w-full bg-gradient-to-r z-50 from-red-600 to-yellow-600 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to={"/"} className="text-2xl font-bold">
           bookmy-ride
@@ -74,13 +74,42 @@ export default function Header() {
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-      {data && isMenuOpen && (
-        <nav className="md:hidden bg-orange-700 p-4">
-          {route.map((item, index) => (
-            <Link key={index} to={item.url}>
-              {item.name}
-            </Link>
-          ))}
+      {isMenuOpen && (
+        <nav className="md:hidden flex-col flex gap-2 bg-orange-700 p-4">
+          {data &&
+            route.map((item, index) => (
+              <Link
+                className="cursor-pointer bg-yellow-600  px-2 py-2 block rounded hover:bg-yellow-700"
+                key={index}
+                to={item.url}
+              >
+                {item.name}
+              </Link>
+            ))}
+          {data && (
+            <p
+              onClick={handleLogout}
+              className="cursor-pointer bg-yellow-600  px-2 py-2 block rounded hover:bg-yellow-700"
+            >
+              Log Out
+            </p>
+          )}
+          {!data && (
+            <div className="flex flex-col gap-2">
+              <Link
+                className=" bg-yellow-600  px-2 py-2 block rounded hover:bg-yellow-700 "
+                to={"/login"}
+              >
+                Sign In
+              </Link>
+              <Link
+                className=" bg-yellow-600  px-2 py-2 block rounded hover:bg-yellow-700 "
+                to={"/signup"}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </nav>
       )}
     </header>
