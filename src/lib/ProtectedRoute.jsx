@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 // import Cookies from "js-cookie";
 
 const ProtectedRoute = ({ children }) => {
