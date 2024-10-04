@@ -14,7 +14,7 @@ const LandingPage = () => {
       <div className="">
         <FeaturedTrips />
       </div>
-      <div className="mb-10">
+      <div className="mb-10 ">
         <Destination />
       </div>
       <div className="">

@@ -55,4 +55,22 @@ export const featuresData = [
   },
 ];
 
+export const route = [
+  {
+    name: "Home",
+    url: "/",
+  },
+  {
+    name: "About",
+    url: "/about",
+  },
+  {
+    name: "Trips",
+    url: "/trips",
+  },
+  {
+    name: "Contact",
+    url: "/contact",
+  },
+];
 export const { VITE_BACKEND_URL, VITE_BG_IMAGE } = import.meta.env;

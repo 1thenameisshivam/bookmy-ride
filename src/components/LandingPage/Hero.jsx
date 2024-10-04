@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
 import { VITE_BG_IMAGE } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
       <div
@@ -30,6 +32,7 @@ export default function Hero() {
           India
         </motion.p>
         <motion.button
+          onClick={() => navigate("/trips")}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}

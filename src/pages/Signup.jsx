@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { VITE_BACKEND_URL } from "../utils/constants";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { loggedin } from "../lib/userSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const Signup = () => {
   });
   const [loding, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const navigationHandler = () => {
     navigate("/login");
   };
@@ -38,6 +41,7 @@ const Signup = () => {
       console.log(response);
       if (response.status) {
         setLoading(false);
+        dispatch(loggedin("nam"));
         navigate("/");
         toast.success("Signup Successful");
       }

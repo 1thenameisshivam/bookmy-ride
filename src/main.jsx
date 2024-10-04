@@ -8,6 +8,8 @@ import Login from "./pages/Login.jsx";
 import ProtectedRoute from "./lib/ProtectedRoute.jsx";
 import Trips from "./pages/Trips.jsx";
 import Signup from "./pages/Signup.jsx";
+import { Provider } from "react-redux";
+import store from "./lib/Store.js";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,14 +32,16 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path:"/signup",
-        element:<Signup/>
-      }
+        path: "/signup",
+        element: <Signup />,
+      },
     ],
   },
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );

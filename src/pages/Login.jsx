@@ -7,6 +7,8 @@ import Logo from "../components/Logo";
 import { VITE_BACKEND_URL } from "../utils/constants";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { loggedin } from "../lib/userSlice";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +18,7 @@ const Login = () => {
   });
   const [loding, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -31,7 +34,7 @@ const Login = () => {
       const response = await login.json();
       if (response.status) {
         setLoading(false);
-
+        dispatch(loggedin("nam"));
         toast.success("Login Successful");
         navigate("/");
       }
