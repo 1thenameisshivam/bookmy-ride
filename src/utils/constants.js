@@ -55,4 +55,4 @@ export const featuresData = [
   },
 ];
 
-export const { VITE_BACKEND_URL } = import.meta.env;
+export const { VITE_BACKEND_URL, VITE_BG_IMAGE } = import.meta.env;

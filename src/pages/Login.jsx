@@ -49,13 +49,12 @@ const Login = () => {
   };
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-gray-900 bg-cover bg-no-repeat"
+      className="h-screen flex items-center justify-center bg-cover bg-no-repeat"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHRyaXB8ZW58MHx8MHx8fDA%3D')",
+          "linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHRyaXB8ZW58MHx8MHx8fDA%3D')",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-75"></div>
       <div className="relative z-10 w-full max-w-md px-6 py-12 bg-gray-900 rounded-2xl shadow-xl">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-red-600">Login</h1>

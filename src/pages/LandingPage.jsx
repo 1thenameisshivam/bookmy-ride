@@ -1,29 +1,30 @@
 import Destination from "../components/Destination";
-import Features from "../components/Features";
-import Hero from "../components/Hero";
-import Logo from "../components/Logo";
-import NumberCount from "../components/NumberCount";
-import WhoWeAre from "../components/WhoWeAre";
+import FeaturedTrips from "../components/LandingPage/FeaturedTrips";
+import Hero from "../components/LandingPage/Hero";
+import HowItWorks from "../components/LandingPage/HowItWorks";
+import Testimonials from "../components/LandingPage/Testimonials";
+import WhoWeAre from "../components/LandingPage/WhoWeAre";
+
 const LandingPage = () => {
   return (
-    <div className="bg-black min-h-screen overflow-hidden">
-      <div className="p-5">
-        <Logo />
-      </div>
-      <div className="mt-10 lg:scale-150 lg:mb-24">
+    <div className="">
+      <div className="">
         <Hero />
       </div>
-      <div className="lg:mt-32">
-        <WhoWeAre />
+      <div className="">
+        <FeaturedTrips />
       </div>
-      <div>
+      <div className="mb-10">
         <Destination />
       </div>
-      <div className="mt-20">
-        <Features />
+      <div className="">
+        <WhoWeAre />
       </div>
-      <div className="flex justify-center">
-        <NumberCount />
+      <div className="">
+        <HowItWorks />
+      </div>
+      <div>
+        <Testimonials />
       </div>
     </div>
   );

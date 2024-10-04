@@ -14,7 +14,7 @@ const Destination = () => {
             src: "https://plus.unsplash.com/premium_vector-1689096845649-80579c8bb9ce?bg=FFFFFF&w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           }}
         >
-          <div className="p-2 text-white">
+          <div className="p-2">
             <div className="mb-2 text-sm font-semibold text-foreground/80">
               Khatushyam, Jaipur:
             </div>
@@ -36,7 +36,7 @@ const Destination = () => {
             </div>
           }
         >
-          <div className="p-2 text-white">
+          <div className="p-2 ">
             <div className="mb-2 text-sm font-semibold text-foreground/80">
               popular destinations
             </div>
@@ -55,7 +55,7 @@ const Destination = () => {
             src: "https://plus.unsplash.com/premium_vector-1709299689737-3bddaa02fa7e?bg=FFFFFF&q=80&w=3600&auto=format&fit=crop&ixlib=rb-4.0.3",
           }}
         >
-          <div className="p-2 text-white">
+          <div className="p-2">
             <div className="mb-2 text-sm font-semibold text-foreground/80">
               Vaishno Devi, Kashmir:
             </div>
