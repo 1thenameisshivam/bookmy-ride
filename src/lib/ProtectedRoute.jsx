@@ -4,22 +4,22 @@ import Cookies from "js-cookie"; // Use js-cookie for easy cookie access
 import { useEffect, useState } from "react";
 
 const ProtectedRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(null);
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
+    useEffect(() => {
+        const token = Cookies.get("token");
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, []);
+
+    if (isAuthenticated === null) {
+        return <div>Loading...</div>;
     }
-  }, []);
 
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>;
-  }
-
-  return isAuthenticated ? children : <Navigate to="/login" />;
+    return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

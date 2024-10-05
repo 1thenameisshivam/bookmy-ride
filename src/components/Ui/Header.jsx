@@ -30,7 +30,7 @@ export default function Header() {
     }
   };
   return (
-    <header className=" fixed overflow-hidden top-0 w-full bg-gradient-to-r z-50 from-red-600 to-yellow-600 text-white">
+    <header className="overflow-hidden  w-full bg-gradient-to-r z-50 from-red-600 to-yellow-600 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to={"/"} className="text-2xl font-bold">
           bookmy-ride
