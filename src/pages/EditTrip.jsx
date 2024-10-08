@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import { X, Upload } from "lucide-react";
+import { useParams } from "react-router-dom";
 
-export default function CreateTrip() {
+export default function EditTrip() {
+    const { id } = useParams();
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        destination: [],
+        destinations: [],
         newDestination: "",
         price: "",
         duration: "",
@@ -13,23 +15,31 @@ export default function CreateTrip() {
         startDate: "",
         endDate: "",
         photoUrl: null,
+        photoFile: null,
     });
+
     const fileInputRef = useRef(null);
+
     const handleAddDestination = () => {
         if (formData.newDestination.trim()) {
             setFormData((prev) => ({
                 ...prev,
-                destination: [...prev.destination, prev.newDestination.trim()],
+                destinations: [
+                    ...prev.destinations,
+                    prev.newDestination.trim(),
+                ],
                 newDestination: "",
             }));
         }
     };
+
     const handleRemoveDestination = (index) => {
         setFormData((prev) => ({
             ...prev,
-            destination: prev.destination.filter((_, i) => i !== index),
+            destinations: prev.destinations.filter((_, i) => i !== index),
         }));
     };
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -38,13 +48,13 @@ export default function CreateTrip() {
                 setFormData((prev) => ({
                     ...prev,
                     photoUrl: reader.result,
-                    // New File Uploaded
                     photoFile: file,
                 }));
             };
             reader.readAsDataURL(file);
         }
     };
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData((prev) => ({
@@ -52,37 +62,43 @@ export default function CreateTrip() {
             [id]: value,
         }));
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const tripData = new FormData();
-        tripData.append("title", formData.title);
-        tripData.append("description", formData.description);
-        tripData.append("destination", JSON.stringify(formData.destination)); // Send as JSON string
-        tripData.append("price", formData.price);
-        tripData.append("duration", formData.duration);
-        tripData.append("availableSeats", formData.availableSeats);
-        tripData.append("startDate", formData.startDate);
-        tripData.append("endDate", formData.endDate);
+        console.log("Before Adding all the data to the edited trip data");
+        const editedTripData = new FormData();
+        editedTripData.append("title", formData.title);
+        editedTripData.append("description", formData.description);
+        editedTripData.append(
+            "destination",
+            JSON.stringify(formData.destinations)
+        );
+        editedTripData.append("price", formData.price);
+        editedTripData.append("duration", formData.duration);
+        editedTripData.append("availableSeats", formData.availableSeats);
+        editedTripData.append("startDate", formData.startDate);
+        editedTripData.append("endDate", formData.endDate);
+        console.log("PhotoFile is :- ", formData.photoFile);
         if (formData.photoFile) {
-            tripData.append("image", formData.photoFile);
+            editedTripData.append("image", formData.photoFile);
         }
+        console.log("All Data Added to the Edited Trip Data");
         try {
-            const response = await fetch(
-                "http://localhost:3000/trip/createTrip",
+            const res = await fetch(
+                "http://localhost:3000/trip/editTrip/" + id,
                 {
-                    method: "POST",
-                    body: tripData,
+                    method: "PATCH",
+                    body: editedTripData,
                     credentials: "include",
                 }
             );
-
-            if (response.status === 200) {
-                const data = await response.json();
-                console.log("Trip created successfully", data.message);
+            if (res.status === 200) {
+                const data = await res.json();
+                console.log("Trip Updated Successfully :-", data.message);
                 setFormData({
                     title: "",
                     description: "",
-                    destination: [],
+                    destinations: [],
                     newDestination: "",
                     price: "",
                     duration: "",
@@ -90,15 +106,15 @@ export default function CreateTrip() {
                     startDate: "",
                     endDate: "",
                     photoUrl: null,
-                    photoFile: null,
                 });
             } else {
-                console.error("Failed to create trip", response.data);
+                console.log("Error in updating trip");
             }
         } catch (error) {
-            console.error("Error submitting the form", error);
+            console.error("Error in Updating the trip :-", error);
         }
     };
+
     return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
             <form
@@ -106,7 +122,7 @@ export default function CreateTrip() {
                 className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-2xl"
             >
                 <h2 className="text-3xl font-bold mb-6 text-red-500">
-                    Create New Trip
+                    Edit Your Trip
                 </h2>
 
                 <div className="space-y-4">
@@ -148,7 +164,7 @@ export default function CreateTrip() {
                             htmlFor="destination"
                             className="block text-white mb-1"
                         >
-                            destination
+                            Destinations
                         </label>
                         <div className="flex space-x-2">
                             <input
@@ -167,7 +183,7 @@ export default function CreateTrip() {
                             </button>
                         </div>
                         <div className="flex flex-wrap gap-2 mt-2">
-                            {formData.destination.map((dest, index) => (
+                            {formData.destinations.map((dest, index) => (
                                 <span
                                     key={index}
                                     className="bg-red-500 text-white px-2 py-1 rounded-full text-sm flex items-center"
@@ -273,6 +289,7 @@ export default function CreateTrip() {
                             />
                         </div>
                     </div>
+
                     <div>
                         <label
                             htmlFor="photo"
@@ -292,7 +309,6 @@ export default function CreateTrip() {
                             <input
                                 id="photo"
                                 type="file"
-                                name="image"
                                 accept="image/*"
                                 required
                                 className="hidden"
