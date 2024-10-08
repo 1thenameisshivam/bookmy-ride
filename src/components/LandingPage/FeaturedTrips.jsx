@@ -41,6 +41,7 @@ export default function FeaturedTrips() {
           {trips.map((trip, index) => (
             <TripCard
               index={index}
+              id={trip.id}
               availableSeats={trip.capacity}
               key={trip.id}
               title={trip.title}

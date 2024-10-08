@@ -13,7 +13,6 @@ const Trips = () => {
     try {
       const response = await fetch(VITE_BACKEND_URL + "/trip/");
       const data = await response.json();
-      console.log(data);
       setTrip(data.trips);
     } catch (error) {
       console.log(error);
@@ -25,6 +24,7 @@ const Trips = () => {
         {trip?.map((trip, index) => (
           <TripCard
             index={index}
+            id={trip._id}
             key={trip.id}
             title={trip.title}
             duration={trip.duration}

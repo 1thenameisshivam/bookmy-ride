@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const TripCard = ({ index, title, availableSeats, duration, price, image }) => {
+const TripCard = ({
+  index,
+  title,
+  availableSeats,
+  duration,
+  price,
+  image,
+  id,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -17,9 +26,12 @@ const TripCard = ({ index, title, availableSeats, duration, price, image }) => {
         </p>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-orange-600">{price}</span>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+          <Link
+            to={"/trips/" + id}
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
             Book Now
-          </button>
+          </Link>
         </div>
       </div>
     </motion.div>

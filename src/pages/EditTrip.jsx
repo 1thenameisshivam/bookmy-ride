@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import  { useState, useRef } from "react";
 import { X, Upload } from "lucide-react";
 import { useParams } from "react-router-dom";
 
