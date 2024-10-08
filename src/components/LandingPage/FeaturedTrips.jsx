@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import TripCard from "../Ui/TripCard";
 
 const trips = [
   {
@@ -39,33 +39,15 @@ export default function FeaturedTrips() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {trips.map((trip, index) => (
-            <motion.div
+            <TripCard
+              index={index}
+              availableSeats={trip.capacity}
               key={trip.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <img
-                src={trip.image}
-                alt={trip.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{trip.title}</h3>
-                <p className="text-gray-600 mb-4">
-                  Duration: {trip.duration} | Capacity: {trip.capacity} people
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-orange-600">
-                    {trip.price}
-                  </span>
-                  <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+              title={trip.title}
+              duration={trip.duration}
+              price={trip.price}
+              image={trip.image}
+            />
           ))}
         </div>
       </div>
