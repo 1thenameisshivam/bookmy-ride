@@ -11,6 +11,7 @@ import Signup from "./pages/Signup.jsx";
 import { Provider } from "react-redux";
 import store from "./lib/Store.js";
 import CreateTrip from "./pages/CreateTrip.jsx";
+import EditTrip from "./pages/EditTrip.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: "/create/trip",
                 element: <CreateTrip />,
+            },
+            {
+                path: "/edit/trip/:id",
+                element: <EditTrip />,
             },
         ],
     },
