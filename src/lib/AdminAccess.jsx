@@ -9,11 +9,6 @@ const AdminAccess = ({ children }) => {
     fetchUser();
   }, []);
   const fetchUser = async () => {
-    const cachedAdminStatus = sessionStorage.getItem("isAdmin");
-    if (cachedAdminStatus !== null) {
-      setIsAdmin(cachedAdminStatus === "true");
-      return;
-    }
     try {
       const response = await fetch(VITE_BACKEND_URL + "/user/admin", {
         credentials: "include",
@@ -21,14 +16,11 @@ const AdminAccess = ({ children }) => {
       const data = await response.json();
       if (data.status) {
         setIsAdmin(true);
-        sessionStorage.setItem("isAdmin", data.status);
       } else {
         setIsAdmin(false);
-        sessionStorage.setItem("isAdmin", false);
       }
     } catch (err) {
       setIsAdmin(false);
-      sessionStorage.setItem("isAdmin", false);
     }
   };
   if (isAdmin === null) {

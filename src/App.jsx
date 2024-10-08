@@ -8,23 +8,23 @@ import Footer from "./components/LandingPage/Footer";
 import Cookies from "js-cookie"; // Import js-cookie to access cookies
 
 const App = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const token = Cookies.get("token");
-        if (token) {
-            dispatch(loggedin("name"));
-        }
-    }, []);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      dispatch(loggedin("name"));
+    }
+  }, []);
 
-    return (
-        <div>
-            <Header />
-            <Outlet />
-            <Toaster />
-            <Footer />
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      <Outlet />
+      <Toaster />
+      <Footer />
+    </div>
+  );
 };
 
 export default App;

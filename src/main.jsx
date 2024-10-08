@@ -13,10 +13,12 @@ import store from "./lib/Store.js";
 import CreateTrip from "./pages/CreateTrip.jsx";
 import AdminAccess from "./lib/AdminAccess.jsx";
 import UnAuthorised from "./pages/UnAuthorised.jsx";
+import NotFound from "./pages/NotFound.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
