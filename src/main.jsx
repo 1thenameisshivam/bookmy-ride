@@ -11,9 +11,6 @@ import Signup from "./pages/Signup.jsx";
 import { Provider } from "react-redux";
 import store from "./lib/Store.js";
 import CreateTrip from "./pages/CreateTrip.jsx";
-import AdminAccess from "./lib/AdminAccess.jsx";
-import UnAuthorised from "./pages/UnAuthorised.jsx";
-import NotFound from "./pages/NotFound.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,6 +48,10 @@ const router = createBrowserRouter([
             <CreateTrip />
           </AdminAccess>
         ),
+      },
+      {
+        path: "/edit/trip/:id",
+        element: <EditTrip />,
       },
     ],
   },
