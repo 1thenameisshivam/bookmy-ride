@@ -17,6 +17,7 @@ import UnAuthorised from "./pages/UnAuthorised.jsx";
 import AdminAccess from "./lib/AdminAccess.jsx";
 import EditTrip from "./pages/EditTrip.jsx";
 import TripDetails from "./pages/TripDetails.jsx";
+import BusLayout from "./pages/BusLayout.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/edit/trip/:id",
         element: <EditTrip />,
+      },
+      {
+        path: "/trip/:id/book",
+        element: <BusLayout />,
       },
     ],
   },

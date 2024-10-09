@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VITE_BACKEND_URL } from "../utils/constants";
 import { motion } from "framer-motion";
 import {
@@ -15,7 +15,7 @@ import {
 const TripDetails = () => {
   const { id } = useParams();
   const [tripData, setTripData] = useState({});
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData();
   }, []);
@@ -32,6 +32,14 @@ const TripDetails = () => {
   if (!tripData) {
     return <div>Loading...</div>;
   }
+  const handleBooking = () => {
+    navigate(`/trip/${id}/book`, {
+      state: {
+        seats: tripData.seats,
+        busType: tripData.busType,
+      },
+    });
+  };
   return (
     <div className="min-h-screen  text-black">
       <main className="container mx-auto px-4 py-8">
@@ -89,7 +97,10 @@ const TripDetails = () => {
             </div>
             <div className="mt-8">
               <p className="text-3xl font-bold mb-4">₹{tripData.price}</p>
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+              <button
+                onClick={handleBooking}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300"
+              >
                 Book Now
               </button>
             </div>
