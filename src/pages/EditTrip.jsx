@@ -1,9 +1,34 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { X, Upload } from "lucide-react";
 import { useParams } from "react-router-dom";
 
 export default function EditTrip() {
+    const [data, setData] = useState("");
     const { id } = useParams();
+    const fetchData = async () => {
+        try {
+            const res = await fetch(
+                "http://localhost:3000/trip/viewTrip/" + id,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+            if (!res.ok) {
+                throw new Error(`Error: ${res.statusText}`);
+            }
+            const result = await res.json(); // Parse the JSON response
+            console.log("Fetched Data from the ViewTrip:", result);
+            console.log("Title is ", data?.title);
+            setData(result.data);
+            // console.log("Fetched Data from the ViewTrip", res);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -18,6 +43,23 @@ export default function EditTrip() {
         photoFile: null,
     });
 
+    useEffect(() => {
+        if (data) {
+            setFormData({
+                title: data.title || "",
+                description: data.description || "",
+                destinations: data.destination || [],
+                newDestination: "",
+                price: data.price || "",
+                duration: data.duration || "",
+                availableSeats: data.availableSeats || "",
+                startDate: data.startDate || "",
+                endDate: data.endDate || "",
+                photoUrl: data.photo || null,
+                photoFile: null,
+            });
+        }
+    }, [data]);
     const fileInputRef = useRef(null);
 
     const handleAddDestination = () => {
@@ -347,7 +389,7 @@ export default function EditTrip() {
                     type="submit"
                     className="mt-6 w-full px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
-                    Create Trip
+                    Edit Trip
                 </button>
             </form>
         </div>
