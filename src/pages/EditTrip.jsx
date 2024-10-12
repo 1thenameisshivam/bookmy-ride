@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 import React, { useState, useRef, useEffect } from "react";
-=======
-import  { useState, useRef } from "react";
->>>>>>> 3e0fbae1dbcfb45549c88819f2318830060202ed
 import { X, Upload } from "lucide-react";
 import { useParams } from "react-router-dom";
 

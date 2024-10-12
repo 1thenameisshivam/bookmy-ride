@@ -12,6 +12,10 @@ import Signup from "./pages/Signup.jsx";
 import { Provider } from "react-redux";
 import store from "./lib/Store.js";
 import CreateTrip from "./pages/CreateTrip.jsx";
+import NotFound from "./pages/NotFound.jsx"
+import UnAuthorised from "./pages/UnAuthorised.jsx";
+import AdminAccess from "./lib/AdminAccess.jsx";
+import EditTrip from "./pages/EditTrip.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
