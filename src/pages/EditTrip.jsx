@@ -1,8 +1,7 @@
-
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { X, Upload } from "lucide-react";
 import { useParams } from "react-router-dom";
-
+import toast from "react-hot-toast";
 export default function EditTrip() {
     const [data, setData] = useState("");
     const { id } = useParams();
@@ -18,11 +17,10 @@ export default function EditTrip() {
             if (!res.ok) {
                 throw new Error(`Error: ${res.statusText}`);
             }
-            const result = await res.json(); // Parse the JSON response
+            const result = await res.json();
             console.log("Fetched Data from the ViewTrip:", result);
             console.log("Title is ", data?.title);
             setData(result.data);
-            // console.log("Fetched Data from the ViewTrip", res);
         } catch (error) {
             console.error(error);
         }
@@ -42,6 +40,7 @@ export default function EditTrip() {
         endDate: "",
         photoUrl: null,
         photoFile: null,
+        busType: "",
     });
 
     useEffect(() => {
@@ -58,6 +57,7 @@ export default function EditTrip() {
                 endDate: data.endDate || "",
                 photoUrl: data.photo || null,
                 photoFile: null,
+                busType: data?.busType,
             });
         }
     }, [data]);
@@ -97,7 +97,6 @@ export default function EditTrip() {
             reader.readAsDataURL(file);
         }
     };
-
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData((prev) => ({
@@ -105,7 +104,6 @@ export default function EditTrip() {
             [id]: value,
         }));
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Before Adding all the data to the edited trip data");
@@ -121,6 +119,7 @@ export default function EditTrip() {
         editedTripData.append("availableSeats", formData.availableSeats);
         editedTripData.append("startDate", formData.startDate);
         editedTripData.append("endDate", formData.endDate);
+        editedTripData.append("busType", formData.busType);
         console.log("PhotoFile is :- ", formData.photoFile);
         if (formData.photoFile) {
             editedTripData.append("image", formData.photoFile);
@@ -138,6 +137,7 @@ export default function EditTrip() {
             if (res.status === 200) {
                 const data = await res.json();
                 console.log("Trip Updated Successfully :-", data.message);
+                toast.success("Trip Updated Successfully :");
                 setFormData({
                     title: "",
                     description: "",
@@ -157,7 +157,6 @@ export default function EditTrip() {
             console.error("Error in Updating the trip :-", error);
         }
     };
-
     return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
             <form
@@ -167,7 +166,6 @@ export default function EditTrip() {
                 <h2 className="text-3xl font-bold mb-6 text-red-500">
                     Edit Your Trip
                 </h2>
-
                 <div className="space-y-4">
                     <div>
                         <label
@@ -185,7 +183,6 @@ export default function EditTrip() {
                             className="w-full px-3 py-2 bg-gray-700 text-white border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         />
                     </div>
-
                     <div>
                         <label
                             htmlFor="description"
@@ -201,7 +198,6 @@ export default function EditTrip() {
                             className="w-full px-3 py-2 bg-gray-700 text-white border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 h-32"
                         ></textarea>
                     </div>
-
                     <div>
                         <label
                             htmlFor="destination"
@@ -245,7 +241,6 @@ export default function EditTrip() {
                             ))}
                         </div>
                     </div>
-
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label
@@ -383,6 +378,22 @@ export default function EditTrip() {
                                 </div>
                             )}
                         </div>
+                    </div>
+                    <div>
+                        <select
+                            id="busType"
+                            name="busType"
+                            value={formData.busType} // Bind to form data state
+                            onChange={handleChange} // Handle the change event
+                            required
+                            className="w-full px-3 py-2 bg-gray-700 text-white border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            <option value="" disabled>
+                                Select Bus Type
+                            </option>
+                            <option value="2x1">2x1</option>
+                            <option value="3x1">3x1</option>
+                        </select>
                     </div>
                 </div>
 
