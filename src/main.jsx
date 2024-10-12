@@ -12,12 +12,10 @@ import Signup from "./pages/Signup.jsx";
 import { Provider } from "react-redux";
 import store from "./lib/Store.js";
 import CreateTrip from "./pages/CreateTrip.jsx";
-import NotFound from "./pages/NotFound.jsx";
+import NotFound from "./pages/NotFound.jsx"
 import UnAuthorised from "./pages/UnAuthorised.jsx";
 import AdminAccess from "./lib/AdminAccess.jsx";
 import EditTrip from "./pages/EditTrip.jsx";
-import TripDetails from "./pages/TripDetails.jsx";
-import BusLayout from "./pages/BusLayout.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,11 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/trips",
-        element: <Trips />,
-      },
-      {
-        path: "/trips/:id",
-        element: <TripDetails />,
+        element: (
+          <ProtectedRoute>
+            <Trips />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
@@ -60,17 +58,13 @@ const router = createBrowserRouter([
         path: "/edit/trip/:id",
         element: <EditTrip />,
       },
-      {
-        path: "/trip/:id/book",
-        element: <BusLayout />,
-      },
     ],
   },
 ]);
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>
+    <StrictMode>
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
+    </StrictMode>
 );
