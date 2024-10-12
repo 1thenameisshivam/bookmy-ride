@@ -37,10 +37,11 @@ export default function FeaturedTrips() {
         <h2 className="text-3xl text-yellow-500 font-mono font-bold text-center mb-12">
           Featured Trips
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex gap-8">
           {trips.map((trip, index) => (
             <TripCard
               index={index}
+              id={trip.id}
               availableSeats={trip.capacity}
               key={trip.id}
               title={trip.title}
