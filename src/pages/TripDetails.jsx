@@ -37,6 +37,7 @@ const TripDetails = () => {
       state: {
         seats: tripData.seats,
         busType: tripData.busType,
+        tripId: tripData._id,
       },
     });
   };

@@ -13,6 +13,7 @@ const Trips = () => {
     try {
       const response = await fetch(VITE_BACKEND_URL + "/trip/");
       const data = await response.json();
+      console.log(data);
       setTrip(data.trips);
     } catch (error) {
       console.log(error);

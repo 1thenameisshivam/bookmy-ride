@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   LifeBuoy,
   MapPin,
@@ -10,13 +11,13 @@ import {
   CreditCard,
   Tv,
 } from "lucide-react";
-
+import { VITE_BACKEND_URL } from "../utils/constants";
 export default function BusLayout() {
   const location = useLocation();
   const [seats, setSeats] = useState([]);
   const [busType, setBusType] = useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
-
+  const [tripId, setTripId] = useState("");
   useEffect(() => {
     if (location.state?.seats) {
       setSeats(location.state.seats);
@@ -24,14 +25,17 @@ export default function BusLayout() {
     if (location.state?.busType) {
       setBusType(location.state.busType);
     }
+    if (location.state?.tripId) {
+      setTripId(location.state.tripId); // Assuming tripId is passed in location state
+    }
   }, [location.state]);
 
-  const handleSeatClick = (seatId, status) => {
+  const handleSeatClick = (seatNumber, status) => {
     if (status === "available") {
       setSelectedSeats((prev) =>
-        prev.includes(seatId)
-          ? prev.filter((id) => id !== seatId)
-          : [...prev, seatId]
+        prev.includes(seatNumber)
+          ? prev.filter((number) => number !== seatNumber)
+          : [...prev, seatNumber]
       );
     }
   };
@@ -41,21 +45,51 @@ export default function BusLayout() {
     if (selectedSeats.includes(seatId)) return "bg-red-600";
     return "bg-black";
   };
+  const onProceedToPayment = async () => {
+    try {
+      const response = await fetch(
+        `${VITE_BACKEND_URL}/book/lock_seat`, // Replace with your backend URL
+        {
+          method: "POST",
+          credentials: "include", // To send cookies along with request if required
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tripId,
+            selectedSeats,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.status) {
+        toast.success(data.message);
+        // Redirect to payment page or perform other actions
+      } else {
+        toast.error("Please try to book another seat");
+      }
+    } catch (error) {
+      console.error("Error locking seats:", error);
+      toast.error("Error locking seats, please try again");
+    }
+  };
 
   const renderSeat = (seat) => (
     <motion.button
-      key={seat._id}
+      key={seat.seatNumber} // Use seatNumber as the unique key
       className={`w-12 h-14 m-1 relative ${
         seat.status === "booked" ? "cursor-not-allowed" : "hover:opacity-80"
       }`}
-      onClick={() => handleSeatClick(seat._id, seat.status)}
+      onClick={() => handleSeatClick(seat.seatNumber, seat.status)}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <div
         className={`w-full h-10 border-2 ${getSeatColor(
           seat.status,
-          seat._id
+          seat.seatNumber
         )} rounded-t-lg`}
       >
         <div className="absolute inset-2 border-2 border-white rounded-t-lg"></div>
@@ -190,11 +224,13 @@ export default function BusLayout() {
             <h3 className="text-lg font-semibold mb-2">Selected Seats</h3>
             {selectedSeats.length > 0 ? (
               <ul>
-                {selectedSeats.map((seatId) => {
-                  const seat = seats.flat().find((s) => s._id === seatId);
+                {selectedSeats.map((seatNumber) => {
+                  const seat = seats
+                    .flat()
+                    .find((s) => s.seatNumber === seatNumber);
                   return (
                     seat && (
-                      <li key={seatId} className="mb-2">
+                      <li key={seatNumber} className="mb-2">
                         Seat {seat.seatNumber}
                       </li>
                     )
@@ -216,6 +252,7 @@ export default function BusLayout() {
           <button
             className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300"
             disabled={selectedSeats.length === 0}
+            onClick={onProceedToPayment}
           >
             Proceed to Payment
           </button>
