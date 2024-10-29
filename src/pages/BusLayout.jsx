@@ -21,7 +21,6 @@ export default function BusLayout() {
   const [busType, setBusType] = useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [tripId, setTripId] = useState("");
-  const [orderId, setOrderId] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (location.state?.seats) {
@@ -68,14 +67,17 @@ export default function BusLayout() {
         }),
       });
       const data = await response.json();
-
-      setOrderId(data.order_id);
-      return data.payment_session_id;
+      // console.log(data);
+      if (data.order_id && data.payment_session_id) {
+        return { session: data.payment_session_id, order: data.order_id };
+      } else {
+        console.error("Session ID or order ID is missing");
+      }
     } catch (error) {
       console.error("Error getting session id:", error);
     }
   };
-  const varifyPayment = async () => {
+  const varifyPayment = async (order_Id) => {
     try {
       let res = await fetch(`${VITE_BACKEND_URL}/book/varify`, {
         method: "POST",
@@ -84,13 +86,13 @@ export default function BusLayout() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          orderId,
+          orderId: order_Id,
           tripId,
           seats: selectedSeats,
         }),
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (data.paymentStatus == "SUCCESS") {
         toast.success("Payment Sucessfull");
         navigate("/");
@@ -99,7 +101,6 @@ export default function BusLayout() {
       console.log(err);
     }
   };
-
   const onProceedToPayment = async () => {
     try {
       const response = await fetch(
@@ -124,13 +125,14 @@ export default function BusLayout() {
         // Redirect to payment page or perform other actions
         const sessionId = await getSessionId();
         let checkoutOptions = {
-          paymentSessionId: sessionId,
+          paymentSessionId: sessionId.session,
           redirectTarget: "_modal", //optional ( _self, _blank, or _top)
         };
 
         cashfree.checkout(checkoutOptions).then((res) => {
           console.log("payment initilise");
-          varifyPayment(orderId);
+          // Make sure orderId is set before verification
+          varifyPayment(sessionId.order);
         });
       } else {
         toast.error("Please try to book another seat");
