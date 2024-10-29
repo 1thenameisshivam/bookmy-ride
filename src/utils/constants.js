@@ -60,13 +60,17 @@ export const route = [
     name: "Home",
     url: "/",
   },
-  {
-    name: "About",
-    url: "/about",
-  },
+  // {
+  //   name: "About",
+  //   url: "/about",
+  // },
   {
     name: "Trips",
     url: "/trips",
+  },
+  {
+    name: "Bookings",
+    url: "/trip/bookings",
   },
   {
     name: "Contact",

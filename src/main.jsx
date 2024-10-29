@@ -18,6 +18,8 @@ import NotFound from "./pages/NotFound.jsx";
 import UnAuthorised from "./pages/UnAuthorised.jsx";
 import AdminAccess from "./lib/AdminAccess.jsx";
 import EditTrip from "./pages/EditTrip.jsx";
+import Bookings from "./pages/Bookings.jsx";
+import ContactPage from "./pages/ContactPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "/trip/:id/book",
         element: <BusLayout />,
+      },
+      {
+        path: "/trip/bookings",
+        element: <Bookings />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
     ],
   },
