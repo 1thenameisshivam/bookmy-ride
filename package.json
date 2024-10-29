@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.5",
     "@reduxjs/toolkit": "^2.2.7",
     "framer-motion": "^11.9.0",
     "js-cookie": "^3.0.5",

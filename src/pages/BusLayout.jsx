@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
   LifeBuoy,
@@ -12,12 +13,16 @@ import {
   Tv,
 } from "lucide-react";
 import { VITE_BACKEND_URL } from "../utils/constants";
+import { load } from "@cashfreepayments/cashfree-js";
 export default function BusLayout() {
   const location = useLocation();
+  let cashfree;
   const [seats, setSeats] = useState([]);
   const [busType, setBusType] = useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [tripId, setTripId] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.state?.seats) {
       setSeats(location.state.seats);
@@ -29,7 +34,12 @@ export default function BusLayout() {
       setTripId(location.state.tripId); // Assuming tripId is passed in location state
     }
   }, [location.state]);
-
+  let initiliseSDK = async () => {
+    cashfree = await load({
+      mode: "sandbox",
+    });
+  };
+  initiliseSDK();
   const handleSeatClick = (seatNumber, status) => {
     if (status === "available") {
       setSelectedSeats((prev) =>
@@ -45,6 +55,51 @@ export default function BusLayout() {
     if (selectedSeats.includes(seatId)) return "bg-red-600";
     return "bg-black";
   };
+  const getSessionId = async () => {
+    try {
+      const response = await fetch(`${VITE_BACKEND_URL}/book/get_session_id`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tripId,
+        }),
+      });
+      const data = await response.json();
+
+      setOrderId(data.order_id);
+      return data.payment_session_id;
+    } catch (error) {
+      console.error("Error getting session id:", error);
+    }
+  };
+  const varifyPayment = async () => {
+    try {
+      let res = await fetch(`${VITE_BACKEND_URL}/book/varify`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId,
+          tripId,
+          seats: selectedSeats,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.paymentStatus == "SUCCESS") {
+        toast.success("Payment Sucessfull");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onProceedToPayment = async () => {
     try {
       const response = await fetch(
@@ -67,6 +122,16 @@ export default function BusLayout() {
       if (data.status) {
         toast.success(data.message);
         // Redirect to payment page or perform other actions
+        const sessionId = await getSessionId();
+        let checkoutOptions = {
+          paymentSessionId: sessionId,
+          redirectTarget: "_modal", //optional ( _self, _blank, or _top)
+        };
+
+        cashfree.checkout(checkoutOptions).then((res) => {
+          console.log("payment initilise");
+          varifyPayment(orderId);
+        });
       } else {
         toast.error("Please try to book another seat");
       }
