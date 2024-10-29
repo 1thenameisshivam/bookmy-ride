@@ -38,6 +38,7 @@ const TripDetails = () => {
         seats: tripData.seats,
         busType: tripData.busType,
         tripId: tripData._id,
+        price: tripData.price,
       },
     });
   };

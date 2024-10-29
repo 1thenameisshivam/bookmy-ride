@@ -21,6 +21,7 @@ export default function BusLayout() {
   const [busType, setBusType] = useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [tripId, setTripId] = useState("");
+  const [price, setPrice] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (location.state?.seats) {
@@ -31,6 +32,9 @@ export default function BusLayout() {
     }
     if (location.state?.tripId) {
       setTripId(location.state.tripId); // Assuming tripId is passed in location state
+    }
+    if (location.state.price) {
+      setPrice(location.state.price);
     }
   }, [location.state]);
   let initiliseSDK = async () => {
@@ -64,6 +68,7 @@ export default function BusLayout() {
         },
         body: JSON.stringify({
           tripId,
+          noOfSeats: selectedSeats.length,
         }),
       });
       const data = await response.json();
@@ -310,11 +315,17 @@ export default function BusLayout() {
           </div>
           <div className="mb-4">
             <h3 className="text-lg font-semibold mb-2">Price Details</h3>
-            <p>Base Fare: $50 per seat</p>
-            <p>Tax: $5 per seat</p>
-            <p className="font-bold mt-2">
-              Total: ${selectedSeats.length * 55}
-            </p>
+            <p>Base Fare: ₹ {price} per seat</p>
+            <p>Tax: ₹ 50 per seat</p>
+            {selectedSeats.length > 0 ? (
+              <p className="font-bold mt-2">
+                Total: ₹{selectedSeats.length * price + 50}
+              </p>
+            ) : (
+              <p className="font-bold mt-2">
+                Total: ₹{selectedSeats.length * price + 0}
+              </p>
+            )}
           </div>
           <button
             className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300"
