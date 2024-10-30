@@ -37,18 +37,19 @@ export default function FeaturedTrips() {
         <h2 className="text-3xl text-yellow-500 font-mono font-bold text-center mb-12">
           Featured Trips
         </h2>
-        <div className="flex gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {trips.map((trip, index) => (
-            <TripCard
-              index={index}
-              id={trip.id}
-              availableSeats={trip.capacity}
-              key={trip.id}
-              title={trip.title}
-              duration={trip.duration}
-              price={trip.price}
-              image={trip.image}
-            />
+            <div className="w-full sm:w-1/2 lg:w-1/3" key={trip.id}>
+              <TripCard
+                index={index}
+                id={trip.id}
+                availableSeats={trip.capacity}
+                title={trip.title}
+                duration={trip.duration}
+                price={trip.price}
+                image={trip.image}
+              />
+            </div>
           ))}
         </div>
       </div>
