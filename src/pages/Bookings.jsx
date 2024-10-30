@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { VITE_BACKEND_URL } from "../utils/constants";
 import { CalendarDays, CreditCard, MapPin, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -91,8 +92,22 @@ const Bookings = () => {
                 </div>
               </div>
               <div className="px-6 py-4 bg-red-50">
-                <button className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors duration-300">
-                  View Details
+                <button
+                  onClick={() =>
+                    navigate(`/trip/ticket/${booking.tripId}`, {
+                      state: {
+                        tripId: booking.tripId,
+                        currency: booking.currency,
+                        amount: booking.amount,
+                        date: booking.bookingDate,
+                        seats: booking.seatsBooked,
+                        orderId: booking.orderId,
+                      },
+                    })
+                  }
+                  className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors duration-300"
+                >
+                  Get Ticket
                 </button>
               </div>
             </div>

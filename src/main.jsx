@@ -20,6 +20,7 @@ import AdminAccess from "./lib/AdminAccess.jsx";
 import EditTrip from "./pages/EditTrip.jsx";
 import Bookings from "./pages/Bookings.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
+import TripTicket from "./pages/TripTicket.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/trips/:id",
-        element: <TripDetails />,
+        element: (
+          <ProtectedRoute>
+            <TripDetails />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
@@ -72,11 +77,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/trip/:id/book",
-        element: <BusLayout />,
+        element: (
+          <ProtectedRoute>
+            <BusLayout />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/trip/bookings",
-        element: <Bookings />,
+        element: (
+          <ProtectedRoute>
+            <Bookings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/trip/ticket/:id",
+        element: (
+          <ProtectedRoute>
+            <TripTicket />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/contact",
