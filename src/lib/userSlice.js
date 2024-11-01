@@ -9,12 +9,14 @@ const userSlice = createSlice({
     reducers: {
         loggedin: (state, action) => {
             state.user = action.payload;
+            console.log("Actions.payload is ",action);
             state.isLoggedIn = true;
         },
         logout: (state) => {
             state.user = null;
             state.isLoggedIn = false;
         },
+        // isAdmin:(state)=>   
     },
 });
 
