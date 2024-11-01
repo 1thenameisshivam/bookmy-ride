@@ -12,102 +12,33 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-// import {
-//     Menu,
-//     X,
-//     Home,
-//     Users,
-//     CreditCard,
-//     TrendingUp,
-//     Settings,
-//     Bell,
-// } from "lucide-react";
+import {
+    Menu,
+    X,
+    Home,
+    Users,
+    CreditCard,
+    TrendingUp,
+    Settings,
+    Bell,
+} from "lucide-react";
 import { TotalRevenueGenerator } from "../../utils/TotalRevenueGenerator";
 import { VITE_BACKEND_URL } from "../../utils/constants";
 import { TotalTripsGenerator } from "../../utils/TotalTripsGenerator";
 import { TotalActiveUsers } from "../../utils/TotalActiveUsers";
+import { MonthlyRevenueGenerator } from "../../utils/MonthlyRevenueGenerator";
+import RevenueTrendChart from "../RevenueTrendChart";
+import TripDistributionChart from "../TripDistributionChart";
 
 // Chart Data
-const pieData = [
-    { name: "Booked Trips", value: 724 },
-    { name: "Available Trips", value: 276 },
-];
 
 const COLORS = ["#FF0000", "#ffffff"];
 // const totalRevenue=TotalRevenueGenerator();
 
 // console.log("Total Revenue is:- ", totalRevenue);
-const lineData = [
-    { name: "Jan", revenue: 4000 },
-    { name: "Feb", revenue: 3000 },
-    { name: "Mar", revenue: 5000 },
-    { name: "Apr", revenue: 4780 },
-    { name: "May", revenue: 5890 },
-    { name: "Jun", revenue: 6390 },
-];
 
-// Custom PieChart Component
-const TripDistributionChart = () => {
-    return (
-        <div style={{ width: "100%", height: 300 }}>
-            <ResponsiveContainer>
-                <PieChart>
-                    <Pie
-                        data={pieData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        outerRadius={80}
-                        fill="#8884d8"
-                        dataKey="value"
-                        label={({ name, percent }) =>
-                            `${name} ${(percent * 100).toFixed(0)}%`
-                        }
-                    >
-                        {pieData.map((entry, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={COLORS[index % COLORS.length]}
-                            />
-                        ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </div>
-    );
-};
 
 // Custom LineChart Component
-const RevenueTrendChart = () => {
-    return (
-        <div style={{ width: "100%", height: 300 }}>
-            <ResponsiveContainer>
-                <LineChart data={lineData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                    <XAxis dataKey="name" stroke="#888" />
-                    <YAxis stroke="#888" />
-                    <Tooltip
-                        contentStyle={{
-                            backgroundColor: "#1E1E1E",
-                            border: "none",
-                        }}
-                    />
-                    <Legend />
-                    <Line
-                        type="monotone"
-                        dataKey="revenue"
-                        stroke="#FF0000"
-                        strokeWidth={2}
-                        dot={{ fill: "#FF0000" }}
-                    />
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
-    );
-};
-
 export default function AdminDashboard() {
     // const [sidebarOpen, setSidebarOpen] = useState(false);
     const [totalRevenue, setTotalRevenue] = useState(0);
@@ -115,6 +46,7 @@ export default function AdminDashboard() {
     const [tripData, setTripData] = useState({
         totalTrips: 0,
         numberChange: 0,
+        totalBookedTrips: 0,
     });
     const [userInfo, setUserInfo] = useState({
         totalUsers: 0,
@@ -131,12 +63,14 @@ export default function AdminDashboard() {
             }
         };
         const fetchTripsDetails = async () => {
-            const [totalTrips, numberChange] = await TotalTripsGenerator();
+            const [totalTrips, numberChange, totalBookedTrips] =
+                await TotalTripsGenerator();
             if (totalTrips != null) {
                 console.log("Total Trips is:- ", totalTrips);
                 setTripData({
                     totalTrips: totalTrips,
                     numberChange: numberChange,
+                    totalBookedTrips: totalBookedTrips,
                 });
             }
         };
@@ -163,7 +97,7 @@ export default function AdminDashboard() {
     return (
         <div className="flex h-screen bg-[#0a0a0a] text-white">
             {/* Sidebar */}
-            {/* <aside
+           {/*  <aside
                 className={`${
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 } fixed inset-y-0 left-0 z-50 w-64 bg-black transition-transform duration-300 ease-in-out md:translate-x-0 md:relative`}
@@ -203,7 +137,7 @@ export default function AdminDashboard() {
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Top bar */}
-                {/*  <header className="bg-black shadow-md">
+                 {/* <header className="bg-black shadow-md">
                     <div className="flex items-center justify-between px-4 py-3">
                         <button
                             onClick={() => setSidebarOpen(true)}
@@ -222,8 +156,10 @@ export default function AdminDashboard() {
                             <div className="w-8 h-8 rounded-full bg-gray-700"></div>
                         </div>
                     </div>
-                </header>
- */}
+                </header> */}
+
+
+
                 {/* Dashboard content */}
                 <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
                     <h2 className="text-3xl font-bold mb-6">Admin Dashboard</h2>
@@ -275,7 +211,10 @@ export default function AdminDashboard() {
                             <h3 className="text-xl font-bold mb-4">
                                 Trip Distribution
                             </h3>
-                            <TripDistributionChart />
+                            <TripDistributionChart
+                                totalTrips={tripData.totalTrips}
+                                bookedTrips={tripData.totalBookedTrips}
+                            />
                         </div>
                         <div className="bg-black p-6 rounded-lg shadow-lg border border-gray-800">
                             <h3 className="text-xl font-bold mb-4">
