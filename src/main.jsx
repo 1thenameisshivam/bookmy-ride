@@ -23,6 +23,7 @@ import ContactPage from "./pages/ContactPage.jsx";
 import TripTicket from "./pages/TripTicket.jsx";
 import AdminDashboard from "./components/Ui/AdminDashboard.jsx";
 import UserStatistics from "./components/Ui/UserStatistics.jsx";
+import UserDetails from "./pages/UserDetails.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -118,6 +119,14 @@ const router = createBrowserRouter([
                 element: (
                     <AdminAccess>
                         <UserStatistics />
+                    </AdminAccess>
+                ),
+            },
+            {
+                path: "/user/:id",
+                element: (
+                    <AdminAccess>
+                        <UserDetails />
                     </AdminAccess>
                 ),
             },

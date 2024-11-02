@@ -4,6 +4,7 @@ import { VITE_BACKEND_URL } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../../lib/userSlice";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export default function UserStatistics() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -155,8 +156,11 @@ export default function UserStatistics() {
                                     className="border-t border-gray-700"
                                 >
                                     <td className="py-2 md:py-4">
-                                        {user.userName}
+                                        <Link to={`/user/${user._id}`}>
+                                            {user.userName}
+                                        </Link>
                                     </td>
+
                                     <td className="py-2 md:py-4">
                                         {user.email}
                                     </td>

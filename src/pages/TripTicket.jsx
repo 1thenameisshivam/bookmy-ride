@@ -22,6 +22,7 @@ const TripTicket = () => {
             const response = await fetch(`${VITE_BACKEND_URL}/trip/${id}`);
             const data = await response.json();
             setTripData(data.trip);
+            // console.log("Trip Data", tripData);
         } catch (error) {
             toast.error("Failed to fetch trip data");
             console.log(error);
