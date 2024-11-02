@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import {
     PieChart,
     Pie,
@@ -29,6 +29,7 @@ import { TotalActiveUsers } from "../../utils/TotalActiveUsers";
 import { MonthlyRevenueGenerator } from "../../utils/MonthlyRevenueGenerator";
 import RevenueTrendChart from "../RevenueTrendChart";
 import TripDistributionChart from "../TripDistributionChart";
+import SideBarAdmin from "../SideBarAdmin";
 
 // Chart Data
 
@@ -97,7 +98,7 @@ export default function AdminDashboard() {
     return (
         <div className="flex h-screen bg-[#0a0a0a] text-white">
             {/* Sidebar */}
-           {/*  <aside
+            {/* <aside
                 className={`${
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 } fixed inset-y-0 left-0 z-50 w-64 bg-black transition-transform duration-300 ease-in-out md:translate-x-0 md:relative`}
@@ -133,6 +134,7 @@ export default function AdminDashboard() {
                     ))}
                 </nav>
             </aside> */}
+            <SideBarAdmin />
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">

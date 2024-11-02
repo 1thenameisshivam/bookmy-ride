@@ -22,6 +22,7 @@ import Bookings from "./pages/Bookings.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import TripTicket from "./pages/TripTicket.jsx";
 import AdminDashboard from "./components/Ui/AdminDashboard.jsx";
+import UserStatistics from "./components/Ui/UserStatistics.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -111,6 +112,14 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 element: <ContactPage />,
+            },
+            {
+                path: "/admin/Users",
+                element: (
+                    <AdminAccess>
+                        <UserStatistics />
+                    </AdminAccess>
+                ),
             },
         ],
     },
