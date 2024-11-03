@@ -16,7 +16,7 @@ const TripCard = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-white lg:w-[30%]  rounded-lg shadow-md overflow-hidden"
+            className="bg-white   rounded-lg shadow-md overflow-hidden"
         >
             <img src={image} alt={title} className="w-full h-48 object-cover" />
             <div className="p-6">

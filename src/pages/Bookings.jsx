@@ -65,7 +65,7 @@ const Bookings = () => {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">
-                    Trip ID: {booking.tripId.slice(-6)}
+                    Ticket ID: {booking.tripId.slice(-6)}
                   </h2>
                   <span className="px-3 py-1 text-sm font-semibold text-red-600 bg-red-100 rounded-full">
                     {booking.currency} {booking.amount}
