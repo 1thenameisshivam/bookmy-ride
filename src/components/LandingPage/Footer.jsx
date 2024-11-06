@@ -20,12 +20,14 @@ export default function Footer() {
                                 <Facebook size={24} />
                             </a>
                             <a
+                                target="_blank"
                                 href="https://www.instagram.com/bookmy_ride.in/profilecard/?igsh=MTZ2bnRlZGtid2xueg== "
                                 className="hover:text-orange-200 transition-colors"
                             >
                                 <Instagram size={24} />
                             </a>
                             <a
+                                target="_blank"
                                 href="#"
                                 className="hover:text-orange-200 transition-colors"
                             >
