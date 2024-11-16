@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { VITE_BACKEND_URL } from "../utils/constants";
@@ -11,13 +10,20 @@ import {
   Utensils,
   Hotel,
   Mountain,
+  Edit,
+  Trash2,
 } from "lucide-react";
+import toast from "react-hot-toast";
+
 const TripDetails = () => {
   const { id } = useParams();
   const [tripData, setTripData] = useState({});
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
     fetchData();
+    isUserAdmin();
   }, []);
 
   const fetchData = async () => {
@@ -29,10 +35,22 @@ const TripDetails = () => {
       console.log(error);
     }
   };
-  console.log(tripData);
-  if (!tripData) {
-    return <div>Loading...</div>;
-  }
+
+  const isUserAdmin = async () => {
+    try {
+      const isAdmin = await fetch(VITE_BACKEND_URL + "/user/admin", {
+        method: "GET",
+        credentials: "include",
+      });
+      const response = await isAdmin.json();
+      if (response.status) {
+        setIsAdmin(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleBooking = () => {
     navigate(`/trip/${id}/book`, {
       state: {
@@ -51,8 +69,35 @@ const TripDetails = () => {
       },
     });
   };
+
+  const handleEdit = () => {
+    navigate(`/edit/trip/${id}`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${VITE_BACKEND_URL}/trip/delete/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.ok) {
+        toast.success("Trip deleted successfully");
+        navigate("/trips");
+      } else {
+        toast.error("Failed to delete trip");
+      }
+    } catch (error) {
+      console.error("Error deleting trip:", error);
+      toast.error("An error occurred while deleting the trip");
+    }
+  };
+
+  if (!tripData) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="min-h-screen  text-black">
+    <div className="min-h-screen text-black">
       <main className="container mx-auto px-4 py-8">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -73,7 +118,7 @@ const TripDetails = () => {
               <img
                 src={tripData.photoUrl}
                 alt={tripData.title}
-                className="transition-transform duration-300  object-cover hover:scale-105"
+                className="transition-transform duration-300 object-cover hover:scale-105"
               />
             </div>
           </motion.div>
@@ -108,12 +153,32 @@ const TripDetails = () => {
             </div>
             <div className="mt-8">
               <p className="text-3xl font-bold mb-4">₹{tripData.price}</p>
-              <button
-                onClick={handleBooking}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300"
-              >
-                Book Now
-              </button>
+              <div className="flex gap-4">
+                <button
+                  onClick={handleBooking}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300"
+                >
+                  Book Now
+                </button>
+                {isAdmin && (
+                  <>
+                    <button
+                      onClick={handleEdit}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center"
+                    >
+                      <Edit className="w-5 h-5 mr-2" />
+                      Edit Trip
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center"
+                    >
+                      <Trash2 className="w-5 h-5 mr-2" />
+                      Delete Trip
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
