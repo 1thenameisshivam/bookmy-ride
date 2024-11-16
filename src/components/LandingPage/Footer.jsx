@@ -50,7 +50,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="/trips"
                                     className="hover:text-orange-200 transition-colors"
                                 >
                                     Our Trips
@@ -66,7 +66,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="/contact"
                                     className="hover:text-orange-200 transition-colors"
                                 >
                                     Contact Us
@@ -78,13 +78,16 @@ export default function Footer() {
                         <h4 className="text-lg font-semibold mb-4">
                             Contact Information
                         </h4>
+                        <p className="mb-2">Located in Dehradun, Uttarakhand</p>
+                        <p className="mb-2"> India</p>
                         <p className="mb-2">
-                            College road near main bus stand Nakur saharanpur
-                            247342
+                            Phone: +91 8077055403 (Sarthak Mittal)
                         </p>
-                        <p className="mb-2">Uttar Pradesh, India</p>
-                        <p className="mb-2">Phone: +91 8430001889</p>
-                        <p>Email: info@bookmy-ride.com</p>
+                        <p className="mb-2">
+                            Phone: +91 8445599601 (Kartik Mittal)
+                        </p>
+
+                        <p>Email: bookmyridein@gmail.com</p>
                     </div>
                 </div>
                 <div className="mt-8 pt-8 border-t border-orange-500 text-center">
