@@ -8,10 +8,12 @@ import {
   LifeBuoy,
   MapPin,
   Clock,
-  Wifi,
-  Coffee,
+  AirVent,
+  MountainSnow,
   CreditCard,
-  Tv,
+  Utensils,
+  Hotel,
+  Check,
   X,
 } from "lucide-react";
 import {
@@ -19,6 +21,7 @@ import {
   VITE_IS_PAYMENT_ACCEPTING,
 } from "../utils/constants";
 import { load } from "@cashfreepayments/cashfree-js";
+import { s } from "framer-motion/client";
 
 export default function Component() {
   const location = useLocation();
@@ -29,12 +32,29 @@ export default function Component() {
   const [tripId, setTripId] = useState("");
   const [price, setPrice] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [ac, setAc] = useState("");
+  const [meal, setMeal] = useState("");
+  const [activities, setActivities] = useState("");
+  const [accommodation, setAccommodation] = useState("");
   useEffect(() => {
     if (location.state?.seats) setSeats(location.state.seats);
     if (location.state?.busType) setBusType(location.state.busType);
     if (location.state?.tripId) setTripId(location.state.tripId);
     if (location.state?.price) setPrice(location.state.price);
+    if (location.state?.pickup) setPickup(location.state.pickup);
+    if (location.state?.drop) setDrop(location.state.drop);
+    if (location.state?.departureTime)
+      setDepartureTime(location.state.departureTime);
+    if (location.state?.arrivalTime) setArrivalTime(location.state.arrivalTime);
+    if (location.state?.ac) setAc(location.state.ac);
+    if (location.state?.meal) setMeal(location.state.meal);
+    if (location.state?.activities) setActivities(location.state.activities);
+    if (location.state?.accommodation)
+      setAccommodation(location.state.accommodation);
   }, [location.state]);
 
   const handleSeatClick = (seatNumber, status) => {
@@ -223,19 +243,19 @@ export default function Component() {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center">
                 <MapPin className="w-5 h-5 mr-2 text-red-600" />
-                <span>Pickup: New York City</span>
+                <span>Pickup: {pickup}</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="w-5 h-5 mr-2 text-red-600" />
-                <span>Drop: Washington D.C.</span>
+                <span>Drop: {drop}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="w-5 h-5 mr-2 text-red-600" />
-                <span>Departure: 08:00 AM</span>
+                <span>Departure:{departureTime}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="w-5 h-5 mr-2 text-red-600" />
-                <span>Arrival: 12:30 PM</span>
+                <span>Arrival: {arrivalTime}</span>
               </div>
             </div>
           </motion.div>
@@ -249,20 +269,41 @@ export default function Component() {
             <h2 className="text-2xl font-bold mb-4 text-red-600">Features</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="flex items-center">
-                <Wifi className="w-5 h-5 mr-2 text-red-600" />
-                <span>Free Wi-Fi</span>
+                <AirVent className="w-5 h-5 mr-2 text-red-600" />
+                <span>{ac ? "Available" : "not-Include"}</span>
               </div>
               <div className="flex items-center">
-                <Coffee className="w-5 h-5 mr-2 text-red-600" />
-                <span>Refreshments</span>
+                <Utensils className="w-5 h-5 mr-2 text-red-600" />
+                <span className="flex items-center gap-1">
+                  Meal:
+                  {meal ? (
+                    <Check className="w-5 h-5 mr-2 text-red-600" />
+                  ) : (
+                    <X className="w-5 h-5 mr-2 text-red-600" />
+                  )}
+                </span>
               </div>
               <div className="flex items-center">
-                <CreditCard className="w-5 h-5 mr-2 text-red-600" />
-                <span>Cashless Payment</span>
+                <Hotel className="w-5 h-5 mr-2 text-red-600" />
+                <span className="flex gap-1 items-center">
+                  Accommodation:
+                  {accommodation ? (
+                    <Check className="w-5 h-5 mr-2 text-red-600" />
+                  ) : (
+                    <X className="w-5 h-5 mr-2 text-red-600" />
+                  )}
+                </span>
               </div>
               <div className="flex items-center">
-                <Tv className="w-5 h-5 mr-2 text-red-600" />
-                <span>Entertainment System</span>
+                <MountainSnow className="w-5 h-5 mr-2 text-red-600" />
+                <span className="flex items-center gap-1">
+                  Activities:
+                  {activities ? (
+                    <Check className="w-5 h-5 mr-2 text-red-600" />
+                  ) : (
+                    <X className="w-5 h-5 mr-2 text-red-600" />
+                  )}
+                </span>
               </div>
             </div>
           </motion.div>

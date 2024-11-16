@@ -29,6 +29,7 @@ const TripDetails = () => {
       console.log(error);
     }
   };
+  console.log(tripData);
   if (!tripData) {
     return <div>Loading...</div>;
   }
@@ -39,6 +40,14 @@ const TripDetails = () => {
         busType: tripData.busType,
         tripId: tripData._id,
         price: tripData.price,
+        pickup: tripData.pickup,
+        drop: tripData.drop,
+        departureTime: tripData.departureTime,
+        arrivalTime: tripData.arrivalTime,
+        ac: tripData.ac,
+        meal: tripData.meal,
+        activities: tripData.activities,
+        accommodation: tripData.accommodation,
       },
     });
   };
@@ -143,40 +152,28 @@ const TripDetails = () => {
               <Utensils className="w-6 h-6 mr-3 text-red-500 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold mb-2">Meals</h3>
-                <p className="text-gray-500">
-                  All meals included: Breakfast, Lunch, and Dinner. Experience
-                  local Himalayan cuisine and international options.
-                </p>
+                <p className="text-gray-500">{tripData?.meal}</p>
               </div>
             </div>
             <div className="flex items-start">
               <Hotel className="w-6 h-6 mr-3 text-red-500 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold mb-2">Accommodation</h3>
-                <p className="text-gray-500">
-                  4-star hotel stays in Mussoorie. Comfortable mountain lodges
-                  during the trek with modern amenities.
-                </p>
+                <p className="text-gray-500">{tripData?.accommodation}</p>
               </div>
             </div>
             <div className="flex items-start">
               <Mountain className="w-6 h-6 mr-3 text-red-500 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold mb-2">Activities</h3>
-                <p className="text-gray-500">
-                  Guided treks, nature walks, and cultural experiences. Optional
-                  adventure activities available.
-                </p>
+                <p className="text-gray-500">{tripData?.activities}</p>
               </div>
             </div>
             <div className="flex items-start">
               <Users className="w-6 h-6 mr-3 text-red-500 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold mb-2">Expert Guides</h3>
-                <p className="text-gray-500">
-                  Experienced local guides and trek leaders ensuring safety and
-                  sharing in-depth knowledge of the region.
-                </p>
+                <p className="text-gray-500">{tripData?.expertGuide}</p>
               </div>
             </div>
           </div>
