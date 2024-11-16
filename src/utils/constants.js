@@ -77,4 +77,5 @@ export const route = [
     url: "/contact",
   },
 ];
-export const { VITE_BACKEND_URL, VITE_BG_IMAGE } = import.meta.env;
+export const { VITE_BACKEND_URL, VITE_BG_IMAGE, VITE_IS_PAYMENT_ACCEPTING } =
+  import.meta.env;
