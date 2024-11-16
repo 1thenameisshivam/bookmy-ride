@@ -20,7 +20,7 @@ const Trips = () => {
   };
   return (
     <div className="p-7 min-h-screen">
-      <div className="flex justify-between items-center gap-4 flex-wrap">
+      <div className="flex  items-center gap-4 flex-wrap">
         {trip?.map((trip, index) => (
           <TripCard
             index={index}
